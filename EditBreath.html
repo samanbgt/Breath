@@ -1,0 +1,2398 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Breathing Exercise / تمرین تنفس</title>
+    <style>
+      /* ===== CSS RESET & BASE ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* ===== FONTS ===== */
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+      /* Vazir font for Persian - loaded from CDN with fallback */
+      @font-face {
+        font-family: "Vazir";
+        src: url("https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir-Regular.woff2")
+          format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Vazir";
+        src: url("https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir-Bold.woff2")
+          format("woff2");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      /* ===== CSS VARIABLES ===== */
+      :root {
+        --bg-primary: #0a1628;
+        --bg-secondary: #111d35;
+        --bg-card: rgba(20, 35, 65, 0.85);
+        --bg-card-hover: rgba(25, 45, 80, 0.9);
+        --text-primary: #e0e8f5;
+        --text-secondary: #8899bb;
+        --text-muted: #556688;
+        --accent: #4a9eff;
+        --accent-glow: rgba(74, 158, 255, 0.3);
+        --accent-secondary: #38d9a9;
+        --inhale-color: #4a9eff;
+        --hold-color: #ffd43b;
+        --exhale-color: #38d9a9;
+        --hold2-color: #cc5de8;
+        --border: rgba(74, 158, 255, 0.15);
+        --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        --radius: 12px;
+        --radius-sm: 8px;
+        --transition: 0.3s ease;
+        --font-en: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-fa: "Vazir", "Tahoma", "Arial", sans-serif;
+        --font: var(--font-en);
+      }
+
+      html[dir="rtl"] {
+        --font: var(--font-fa);
+      }
+
+      body {
+        font-family: var(--font);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        min-height: 100vh;
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+
+      /* ===== BACKGROUND ANIMATION ===== */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+          radial-gradient(
+            ellipse at 20% 50%,
+            rgba(74, 158, 255, 0.08) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 80% 20%,
+            rgba(56, 217, 169, 0.06) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 50% 80%,
+            rgba(204, 93, 232, 0.05) 0%,
+            transparent 50%
+          );
+        z-index: -1;
+        animation: bgShift 20s ease-in-out infinite alternate;
+      }
+
+      @keyframes bgShift {
+        0% {
+          opacity: 0.7;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* ===== LAYOUT ===== */
+      .app-container {
+        max-width: 520px;
+        margin: 0 auto;
+        padding: 16px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ===== HEADER ===== */
+      .app-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        margin-bottom: 16px;
+      }
+
+      .app-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        background: linear-gradient(
+          135deg,
+          var(--accent),
+          var(--accent-secondary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .header-controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      /* ===== BUTTONS ===== */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--bg-card);
+        color: var(--text-primary);
+        font-family: var(--font);
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all var(--transition);
+        white-space: nowrap;
+      }
+
+      .btn:hover {
+        background: var(--bg-card-hover);
+        border-color: var(--accent);
+      }
+
+      .btn:active {
+        transform: scale(0.96);
+      }
+
+      .btn-icon {
+        padding: 8px;
+        min-width: 36px;
+        min-height: 36px;
+        font-size: 1.1rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--accent), #3a7ed9);
+        border-color: var(--accent);
+        font-weight: 600;
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #5aafff, var(--accent));
+      }
+
+      .btn-danger {
+        border-color: #e03131;
+        color: #ff6b6b;
+      }
+
+      .btn-danger:hover {
+        background: rgba(224, 49, 49, 0.15);
+      }
+
+      .btn-success {
+        border-color: var(--accent-secondary);
+        color: var(--accent-secondary);
+      }
+
+      .btn-success:hover {
+        background: rgba(56, 217, 169, 0.15);
+      }
+
+      /* ===== CARDS ===== */
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px;
+        margin-bottom: 12px;
+        backdrop-filter: blur(10px);
+      }
+
+      .card-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      /* ===== PRESETS ===== */
+      .presets-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .preset-btn {
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        font-family: var(--font);
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all var(--transition);
+        text-align: center;
+      }
+
+      .preset-btn:hover {
+        border-color: var(--accent);
+        background: var(--bg-card-hover);
+      }
+
+      .preset-btn.active {
+        border-color: var(--accent);
+        background: rgba(74, 158, 255, 0.15);
+        box-shadow: 0 0 12px var(--accent-glow);
+      }
+
+      .preset-btn .preset-name {
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+
+      .preset-btn .preset-timing {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+      }
+
+      /* ===== SLIDERS ===== */
+      .slider-group {
+        margin-bottom: 12px;
+      }
+
+      .slider-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+        font-size: 0.85rem;
+      }
+
+      .slider-value {
+        font-weight: 600;
+        color: var(--accent);
+        min-width: 30px;
+        text-align: end;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        height: 6px;
+        border-radius: 3px;
+        background: var(--bg-secondary);
+        outline: none;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--accent);
+        cursor: pointer;
+        box-shadow: 0 0 8px var(--accent-glow);
+      }
+
+      input[type="range"]::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--accent);
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 0 8px var(--accent-glow);
+      }
+
+      /* Color-coded sliders */
+      .slider-inhale input[type="range"]::-webkit-slider-thumb {
+        background: var(--inhale-color);
+      }
+      .slider-hold1 input[type="range"]::-webkit-slider-thumb {
+        background: var(--hold-color);
+      }
+      .slider-exhale input[type="range"]::-webkit-slider-thumb {
+        background: var(--exhale-color);
+      }
+      .slider-hold2 input[type="range"]::-webkit-slider-thumb {
+        background: var(--hold2-color);
+      }
+
+      .slider-inhale input[type="range"]::-moz-range-thumb {
+        background: var(--inhale-color);
+      }
+      .slider-hold1 input[type="range"]::-moz-range-thumb {
+        background: var(--hold-color);
+      }
+      .slider-exhale input[type="range"]::-moz-range-thumb {
+        background: var(--exhale-color);
+      }
+      .slider-hold2 input[type="range"]::-moz-range-thumb {
+        background: var(--hold2-color);
+      }
+
+      /* ===== SESSION LIMITS ===== */
+      .limits-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .limit-field {
+        flex: 1;
+        min-width: 120px;
+      }
+
+      .limit-field label {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 4px;
+      }
+
+      .limit-input-group {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+
+      .limit-input-group input {
+        width: 55px;
+        padding: 6px 8px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        font-family: var(--font);
+        font-size: 0.85rem;
+        text-align: center;
+        outline: none;
+      }
+
+      .limit-input-group input:focus {
+        border-color: var(--accent);
+      }
+
+      .limit-input-group span {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      /* ===== AUDIO CONTROLS ===== */
+      .audio-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .audio-select {
+        flex: 1;
+        min-width: 120px;
+        padding: 8px 10px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        font-family: var(--font);
+        font-size: 0.85rem;
+        outline: none;
+        cursor: pointer;
+      }
+
+      .audio-select:focus {
+        border-color: var(--accent);
+      }
+
+      .volume-control {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex: 1;
+        min-width: 100px;
+      }
+
+      .volume-control input[type="range"] {
+        flex: 1;
+        height: 4px;
+      }
+
+      .volume-icon {
+        font-size: 1rem;
+        cursor: pointer;
+        min-width: 24px;
+        text-align: center;
+      }
+
+      /* ===== BREATHING CIRCLE ===== */
+      .circle-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+      }
+
+      .circle-wrapper {
+        position: relative;
+        width: 220px;
+        height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+      }
+
+      .breathing-circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 35%,
+          rgba(74, 158, 255, 0.6),
+          rgba(74, 158, 255, 0.1)
+        );
+        border: 2px solid rgba(74, 158, 255, 0.4);
+        transition:
+          transform 0.1s linear,
+          background 0.5s ease,
+          border-color 0.5s ease,
+          box-shadow 0.5s ease;
+        box-shadow:
+          0 0 30px rgba(74, 158, 255, 0.2),
+          inset 0 0 20px rgba(74, 158, 255, 0.1);
+        will-change: transform;
+      }
+
+      .breathing-circle.inhale {
+        background: radial-gradient(
+          circle at 35% 35%,
+          rgba(74, 158, 255, 0.7),
+          rgba(74, 158, 255, 0.15)
+        );
+        border-color: rgba(74, 158, 255, 0.6);
+        box-shadow:
+          0 0 40px rgba(74, 158, 255, 0.35),
+          inset 0 0 25px rgba(74, 158, 255, 0.15);
+      }
+
+      .breathing-circle.hold1 {
+        background: radial-gradient(
+          circle at 35% 35%,
+          rgba(255, 212, 59, 0.5),
+          rgba(255, 212, 59, 0.1)
+        );
+        border-color: rgba(255, 212, 59, 0.5);
+        box-shadow:
+          0 0 35px rgba(255, 212, 59, 0.25),
+          inset 0 0 20px rgba(255, 212, 59, 0.1);
+      }
+
+      .breathing-circle.exhale {
+        background: radial-gradient(
+          circle at 35% 35%,
+          rgba(56, 217, 169, 0.6),
+          rgba(56, 217, 169, 0.1)
+        );
+        border-color: rgba(56, 217, 169, 0.5);
+        box-shadow:
+          0 0 35px rgba(56, 217, 169, 0.3),
+          inset 0 0 20px rgba(56, 217, 169, 0.1);
+      }
+
+      .breathing-circle.hold2 {
+        background: radial-gradient(
+          circle at 35% 35%,
+          rgba(204, 93, 232, 0.45),
+          rgba(204, 93, 232, 0.08)
+        );
+        border-color: rgba(204, 93, 232, 0.45);
+        box-shadow:
+          0 0 30px rgba(204, 93, 232, 0.2),
+          inset 0 0 20px rgba(204, 93, 232, 0.1);
+      }
+
+      /* ===== PROGRESS RING ===== */
+      .progress-ring {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 220px;
+        height: 220px;
+        transform: rotate(-90deg);
+      }
+
+      .progress-ring circle {
+        fill: none;
+        stroke-width: 3;
+        stroke-linecap: round;
+        transition: stroke 0.5s ease;
+      }
+
+      .progress-ring .bg {
+        stroke: rgba(255, 255, 255, 0.05);
+      }
+
+      .progress-ring .fg {
+        stroke: var(--accent);
+        stroke-dasharray: 660;
+        stroke-dashoffset: 660;
+        transition:
+          stroke-dashoffset 0.1s linear,
+          stroke 0.5s ease;
+      }
+
+      /* ===== PHASE INFO ===== */
+      .phase-label {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+        transition: color 0.5s ease;
+      }
+
+      .phase-countdown {
+        font-size: 2.5rem;
+        font-weight: 300;
+        font-variant-numeric: tabular-nums;
+        margin-bottom: 12px;
+        opacity: 0.9;
+      }
+
+      /* ===== TIME INFO ===== */
+      .time-info {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+      }
+
+      .time-info span {
+        font-variant-numeric: tabular-nums;
+      }
+
+      .time-label {
+        color: var(--text-muted);
+      }
+
+      /* ===== SESSION PROGRESS BAR ===== */
+      .session-progress {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .progress-bar-bg {
+        width: 100%;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--accent),
+          var(--accent-secondary)
+        );
+        border-radius: 2px;
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+
+      .progress-text {
+        text-align: center;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 4px;
+      }
+
+      /* ===== CONTROL BUTTONS ===== */
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 0;
+        flex-wrap: wrap;
+      }
+
+      .controls .btn {
+        min-width: 100px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+
+      /* ===== SUMMARY MODAL ===== */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        backdrop-filter: blur(4px);
+      }
+
+      .modal-overlay.show {
+        display: flex;
+      }
+
+      .modal {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        max-width: 400px;
+        width: 100%;
+        box-shadow: var(--shadow);
+      }
+
+      .modal-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        text-align: center;
+        color: var(--accent-secondary);
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .summary-item {
+        text-align: center;
+        padding: 12px;
+        background: var(--bg-card);
+        border-radius: var(--radius-sm);
+      }
+
+      .summary-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      .summary-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .modal .btn {
+        width: 100%;
+      }
+
+      /* ===== DISABLED STATE ===== */
+      .settings-locked .card:not(.card-circle):not(.card-controls) {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      /* ===== COLLAPSIBLE ===== */
+      .collapsible-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .collapsible-header .toggle-icon {
+        transition: transform var(--transition);
+        font-size: 0.8rem;
+      }
+
+      .collapsible-header.collapsed .toggle-icon {
+        transform: rotate(-90deg);
+      }
+
+      html[dir="rtl"] .collapsible-header.collapsed .toggle-icon {
+        transform: rotate(90deg);
+      }
+
+      .collapsible-body {
+        overflow: hidden;
+        max-height: 500px;
+        transition:
+          max-height 0.3s ease,
+          opacity 0.3s ease,
+          margin 0.3s ease;
+        opacity: 1;
+        margin-top: 12px;
+      }
+
+      .collapsible-body.collapsed {
+        max-height: 0;
+        opacity: 0;
+        margin-top: 0;
+      }
+
+      /* ===== STATUS INDICATOR ===== */
+      .status-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--text-muted);
+        margin-inline-end: 6px;
+      }
+
+      .status-dot.active {
+        background: var(--accent-secondary);
+        animation: pulse 1.5s infinite;
+      }
+
+      .status-dot.paused {
+        background: var(--hold-color);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 360px) {
+        .app-container {
+          padding: 10px;
+        }
+        .card {
+          padding: 12px;
+        }
+        .presets-grid {
+          gap: 6px;
+        }
+        .circle-wrapper {
+          width: 180px;
+          height: 180px;
+        }
+        .progress-ring {
+          width: 180px;
+          height: 180px;
+        }
+        .breathing-circle {
+          width: 100px;
+          height: 100px;
+        }
+        .phase-countdown {
+          font-size: 2rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .app-container {
+          padding: 24px;
+          max-width: 560px;
+        }
+      }
+
+      /* ===== RTL ADJUSTMENTS ===== */
+      html[dir="rtl"] body {
+        font-family: var(--font-fa), var(--font-en);
+      }
+
+      html[dir="rtl"] .slider-value {
+        text-align: start;
+      }
+
+      /* ===== SCROLLBAR ===== */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 3px;
+      }
+
+      /* ===== HELPER ===== */
+      .hidden {
+        display: none !important;
+      }
+      .text-center {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container" id="app">
+      <!-- ===== HEADER ===== -->
+      <header class="app-header">
+        <h1 class="app-title" id="appTitle">Breathe</h1>
+        <div class="header-controls">
+          <button class="btn btn-icon" id="muteBtn" title="Toggle Sound">
+            🔊
+          </button>
+          <button class="btn" id="langBtn">فا</button>
+        </div>
+      </header>
+
+      <!-- ===== PRESETS ===== -->
+      <div class="card" id="presetsCard">
+        <div class="collapsible-header" onclick="toggleCollapsible('presets')">
+          <div class="card-title" id="presetsTitle">Presets</div>
+          <span class="toggle-icon" id="presetsToggle">▼</span>
+        </div>
+        <div class="collapsible-body" id="presetsBody">
+          <div class="presets-grid">
+            <button
+              class="preset-btn active"
+              data-preset="box"
+              onclick="selectPreset('box')"
+            >
+              <div class="preset-name" data-t="presetBox">Box Breathing</div>
+              <div class="preset-timing">4-4-4-4</div>
+            </button>
+            <button
+              class="preset-btn"
+              data-preset="relaxing"
+              onclick="selectPreset('relaxing')"
+            >
+              <div class="preset-name" data-t="preset478">4-7-8 Relaxing</div>
+              <div class="preset-timing">4-7-8-0</div>
+            </button>
+            <button
+              class="preset-btn"
+              data-preset="calm"
+              onclick="selectPreset('calm')"
+            >
+              <div class="preset-name" data-t="presetCalm">Deep Calm</div>
+              <div class="preset-timing">4-6-6-2</div>
+            </button>
+            <button
+              class="preset-btn"
+              data-preset="energy"
+              onclick="selectPreset('energy')"
+            >
+              <div class="preset-name" data-t="presetEnergy">Energizing</div>
+              <div class="preset-timing">6-0-2-0</div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CUSTOM BUILDER ===== -->
+      <div class="card" id="customCard">
+        <div class="collapsible-header" onclick="toggleCollapsible('custom')">
+          <div class="card-title" id="customTitle">Custom</div>
+          <span class="toggle-icon" id="customToggle">▼</span>
+        </div>
+        <div class="collapsible-body" id="customBody">
+          <!-- Inhale -->
+          <div class="slider-group slider-inhale">
+            <div class="slider-label">
+              <span data-t="inhale">Inhale</span>
+              <span
+                class="slider-value"
+                id="inhaleVal"
+                style="color: var(--inhale-color)"
+                >4s</span
+              >
+            </div>
+            <input
+              type="range"
+              id="inhaleSlider"
+              min="0"
+              max="20"
+              step="1"
+              value="4"
+              oninput="updateSlider('inhale')"
+            />
+          </div>
+          <!-- Hold 1 -->
+          <div class="slider-group slider-hold1">
+            <div class="slider-label">
+              <span data-t="hold1">Hold</span>
+              <span
+                class="slider-value"
+                id="hold1Val"
+                style="color: var(--hold-color)"
+                >4s</span
+              >
+            </div>
+            <input
+              type="range"
+              id="hold1Slider"
+              min="0"
+              max="20"
+              step="1"
+              value="4"
+              oninput="updateSlider('hold1')"
+            />
+          </div>
+          <!-- Exhale -->
+          <div class="slider-group slider-exhale">
+            <div class="slider-label">
+              <span data-t="exhale">Exhale</span>
+              <span
+                class="slider-value"
+                id="exhaleVal"
+                style="color: var(--exhale-color)"
+                >4s</span
+              >
+            </div>
+            <input
+              type="range"
+              id="exhaleSlider"
+              min="0"
+              max="20"
+              step="1"
+              value="4"
+              oninput="updateSlider('exhale')"
+            />
+          </div>
+          <!-- Hold 2 -->
+          <div class="slider-group slider-hold2">
+            <div class="slider-label">
+              <span data-t="hold2">Hold 2</span>
+              <span
+                class="slider-value"
+                id="hold2Val"
+                style="color: var(--hold2-color)"
+                >4s</span
+              >
+            </div>
+            <input
+              type="range"
+              id="hold2Slider"
+              min="0"
+              max="20"
+              step="1"
+              value="4"
+              oninput="updateSlider('hold2')"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SESSION LIMITS ===== -->
+      <div class="card" id="limitsCard">
+        <div class="collapsible-header" onclick="toggleCollapsible('limits')">
+          <div class="card-title" id="limitsTitle">Session Limits</div>
+          <span class="toggle-icon collapsed" id="limitsToggle">▼</span>
+        </div>
+        <div class="collapsible-body collapsed" id="limitsBody">
+          <div class="limits-row">
+            <div class="limit-field">
+              <label data-t="totalTime">Total Time</label>
+              <div class="limit-input-group">
+                <input
+                  type="number"
+                  id="limitMin"
+                  min="0"
+                  max="99"
+                  value=""
+                  placeholder="0"
+                />
+                <span>:</span>
+                <input
+                  type="number"
+                  id="limitSec"
+                  min="0"
+                  max="59"
+                  value=""
+                  placeholder="00"
+                />
+              </div>
+            </div>
+            <div class="limit-field">
+              <label data-t="breathCount">Breath Count</label>
+              <div class="limit-input-group">
+                <input
+                  type="number"
+                  id="limitBreaths"
+                  min="0"
+                  max="999"
+                  value=""
+                  placeholder="0"
+                />
+                <span data-t="breaths">breaths</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== AUDIO SETTINGS ===== -->
+      <div class="card" id="audioCard">
+        <div class="collapsible-header" onclick="toggleCollapsible('audio')">
+          <div class="card-title" id="audioTitle">Background Sound</div>
+          <span class="toggle-icon collapsed" id="audioToggle">▼</span>
+        </div>
+        <div class="collapsible-body collapsed" id="audioBody">
+          <div class="audio-row">
+            <select
+              class="audio-select"
+              id="bgSoundSelect"
+              onchange="changeBgSound()"
+            >
+              <option value="none" data-t-opt="bgNone">None</option>
+              <option value="rain" data-t-opt="bgRain">Rain</option>
+              <option value="waves" data-t-opt="bgWaves">Ocean Waves</option>
+              <option value="forest" data-t-opt="bgForest">Forest</option>
+              <option value="drone" data-t-opt="bgDrone">Ambient Drone</option>
+            </select>
+            <div class="volume-control">
+              <span class="volume-icon">🎵</span>
+              <input
+                type="range"
+                id="bgVolume"
+                min="0"
+                max="100"
+                value="30"
+                oninput="updateBgVolume()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== BREATHING CIRCLE ===== -->
+      <div
+        class="card card-circle"
+        style="border: none; background: transparent"
+      >
+        <div class="circle-container">
+          <div class="circle-wrapper">
+            <svg class="progress-ring" viewBox="0 0 220 220">
+              <circle class="bg" cx="110" cy="110" r="105" />
+              <circle class="fg" id="progressRing" cx="110" cy="110" r="105" />
+            </svg>
+            <div class="breathing-circle" id="breathCircle"></div>
+          </div>
+          <div class="phase-label" id="phaseLabel" data-t="ready">Ready</div>
+          <div class="phase-countdown" id="phaseCountdown">0.0</div>
+          <div class="time-info">
+            <div>
+              <span class="time-label" data-t="elapsed">Elapsed: </span>
+              <span id="elapsedTime">0:00</span>
+            </div>
+            <div id="remainingWrapper">
+              <span class="time-label" data-t="remaining">Remaining: </span>
+              <span id="remainingTime">--:--</span>
+            </div>
+          </div>
+          <div class="session-progress">
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="sessionProgress"></div>
+            </div>
+            <div class="progress-text" id="progressText">
+              <span data-t="breathsDone">Breaths</span>:
+              <span id="breathsDone">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CONTROLS ===== -->
+      <div
+        class="card card-controls"
+        style="border: none; background: transparent"
+      >
+        <div class="controls">
+          <button class="btn btn-primary" id="startBtn" onclick="handleStart()">
+            <span data-t="start">Start</span>
+          </button>
+          <button
+            class="btn btn-danger hidden"
+            id="stopBtn"
+            onclick="handleStop()"
+          >
+            <span data-t="stop">Stop</span>
+          </button>
+          <button class="btn" id="resetBtn" onclick="handleReset()">
+            <span data-t="reset">Reset</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SESSION SUMMARY MODAL ===== -->
+    <div class="modal-overlay" id="summaryModal">
+      <div class="modal">
+        <div class="modal-title" id="summaryTitle">
+          🎉 <span data-t="sessionComplete">Session Complete</span>
+        </div>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <div class="summary-value" id="sumDuration">0:00</div>
+            <div class="summary-label" data-t="sumDuration">Duration</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-value" id="sumBreaths">0</div>
+            <div class="summary-label" data-t="sumBreaths">Breaths</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-value" id="sumPattern">4-4-4-4</div>
+            <div class="summary-label" data-t="sumPattern">Pattern</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-value" id="sumCycleTime">16s</div>
+            <div class="summary-label" data-t="sumCycleTime">Cycle Time</div>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="closeSummary()">
+          <span data-t="close">Close</span>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      /* ============================================================
+   TRANSLATIONS
+   ============================================================ */
+      const translations = {
+        en: {
+          appTitle: "Breathe",
+          presetsTitle: "Presets",
+          customTitle: "Custom",
+          limitsTitle: "Session Limits",
+          audioTitle: "Background Sound",
+          presetBox: "Box Breathing",
+          preset478: "4-7-8 Relaxing",
+          presetCalm: "Deep Calm",
+          presetEnergy: "Energizing",
+          inhale: "Inhale",
+          hold1: "Hold",
+          exhale: "Exhale",
+          hold2: "Hold 2",
+          totalTime: "Total Time",
+          breathCount: "Breath Count",
+          breaths: "breaths",
+          bgNone: "None",
+          bgRain: "Rain",
+          bgWaves: "Ocean Waves",
+          bgForest: "Forest",
+          bgDrone: "Ambient Drone",
+          ready: "Ready",
+          phaseInhale: "Inhale",
+          phaseHold1: "Hold",
+          phaseExhale: "Exhale",
+          phaseHold2: "Hold",
+          elapsed: "Elapsed: ",
+          remaining: "Remaining: ",
+          breathsDone: "Breaths",
+          start: "Start",
+          pause: "Pause",
+          resume: "Resume",
+          stop: "Stop",
+          reset: "Reset",
+          sessionComplete: "Session Complete",
+          sumDuration: "Duration",
+          sumBreaths: "Breaths",
+          sumPattern: "Pattern",
+          sumCycleTime: "Cycle Time",
+          close: "Close",
+          langSwitch: "فا",
+        },
+        fa: {
+          appTitle: "تنفس",
+          presetsTitle: "پیش‌فرض‌ها",
+          customTitle: "سفارشی",
+          limitsTitle: "محدودیت جلسه",
+          audioTitle: "صدای پس‌زمینه",
+          presetBox: "تنفس مربعی",
+          preset478: "آرام‌بخش ۴-۷-۸",
+          presetCalm: "آرامش عمیق",
+          presetEnergy: "انرژی‌بخش",
+          inhale: "دم",
+          hold1: "نگه‌داشتن",
+          exhale: "بازدم",
+          hold2: "نگه‌داشتن ۲",
+          totalTime: "زمان کل",
+          breathCount: "تعداد تنفس",
+          breaths: "تنفس",
+          bgNone: "بدون صدا",
+          bgRain: "باران",
+          bgWaves: "امواج اقیانوس",
+          bgForest: "جنگل",
+          bgDrone: "صدای محیطی",
+          ready: "آماده",
+          phaseInhale: "دم",
+          phaseHold1: "نگه‌داشتن",
+          phaseExhale: "بازدم",
+          phaseHold2: "نگه‌داشتن",
+          elapsed: "سپری‌شده: ",
+          remaining: "باقی‌مانده: ",
+          breathsDone: "تنفس‌ها",
+          start: "شروع",
+          pause: "توقف",
+          resume: "ادامه",
+          stop: "پایان",
+          reset: "بازنشانی",
+          sessionComplete: "جلسه کامل شد",
+          sumDuration: "مدت زمان",
+          sumBreaths: "تنفس‌ها",
+          sumPattern: "الگو",
+          sumCycleTime: "زمان چرخه",
+          close: "بستن",
+          langSwitch: "EN",
+        },
+      };
+
+      /* ============================================================
+   APP STATE
+   ============================================================ */
+      let currentLang = "en";
+      let sessionState = "idle"; // idle, running, paused
+      let audioCtx = null;
+      let isMuted = false;
+
+      // Breathing pattern
+      let pattern = { inhale: 4, hold1: 4, exhale: 4, hold2: 4 };
+      let activePreset = "box";
+
+      // Session tracking
+      let sessionStartTime = 0;
+      let sessionElapsedMs = 0;
+      let pausedElapsedMs = 0;
+      let breathCount = 0;
+      let currentPhase = "inhale"; // inhale, hold1, exhale, hold2
+      let phaseStartTime = 0;
+      let phaseDuration = 0;
+      let animFrameId = null;
+
+      // Audio nodes for cleanup
+      let activeOscillators = [];
+      let bgSoundNodes = null;
+      let bgSoundType = "none";
+      let bgVolume = 0.3;
+
+      // Phase cue nodes
+      let phaseCueNodes = [];
+
+      /* ============================================================
+   PRESETS
+   ============================================================ */
+      const presets = {
+        box: { inhale: 4, hold1: 4, exhale: 4, hold2: 4 },
+        relaxing: { inhale: 4, hold1: 7, exhale: 8, hold2: 0 },
+        calm: { inhale: 4, hold1: 6, exhale: 6, hold2: 2 },
+        energy: { inhale: 6, hold1: 0, exhale: 2, hold2: 0 },
+      };
+
+      /* ============================================================
+   INITIALIZATION
+   ============================================================ */
+      function init() {
+        applyLanguage(currentLang);
+        updateAllSliders();
+      }
+
+      /* ============================================================
+   LANGUAGE SWITCHING
+   ============================================================ */
+      function toggleLanguage() {
+        currentLang = currentLang === "en" ? "fa" : "en";
+        applyLanguage(currentLang);
+      }
+
+      function applyLanguage(lang) {
+        const html = document.documentElement;
+        const t = translations[lang];
+
+        // Set direction
+        html.setAttribute("dir", lang === "fa" ? "rtl" : "ltr");
+        html.setAttribute("lang", lang);
+
+        // Update all elements with data-t attribute
+        document.querySelectorAll("[data-t]").forEach((el) => {
+          const key = el.getAttribute("data-t");
+          if (t[key]) el.textContent = t[key];
+        });
+
+        // Update select options
+        document.querySelectorAll("[data-t-opt]").forEach((el) => {
+          const key = el.getAttribute("data-t-opt");
+          if (t[key]) el.textContent = t[key];
+        });
+
+        // Update specific elements
+        document.getElementById("appTitle").textContent = t.appTitle;
+        document.getElementById("langBtn").textContent = t.langSwitch;
+
+        // Update phase label if idle
+        if (sessionState === "idle") {
+          document.getElementById("phaseLabel").textContent = t.ready;
+        } else {
+          // Update current phase label
+          updatePhaseLabel(currentPhase);
+        }
+      }
+
+      document
+        .getElementById("langBtn")
+        .addEventListener("click", toggleLanguage);
+
+      /* ============================================================
+   COLLAPSIBLE SECTIONS
+   ============================================================ */
+      function toggleCollapsible(section) {
+        const body = document.getElementById(section + "Body");
+        const toggle = document.getElementById(section + "Toggle");
+
+        body.classList.toggle("collapsed");
+        toggle.classList.toggle("collapsed");
+      }
+
+      /* ============================================================
+   PRESET SELECTION
+   ============================================================ */
+      function selectPreset(name) {
+        if (sessionState !== "idle") return;
+
+        activePreset = name;
+        pattern = { ...presets[name] };
+
+        // Update UI
+        document.querySelectorAll(".preset-btn").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.preset === name);
+        });
+
+        // Update sliders
+        document.getElementById("inhaleSlider").value = pattern.inhale;
+        document.getElementById("hold1Slider").value = pattern.hold1;
+        document.getElementById("exhaleSlider").value = pattern.exhale;
+        document.getElementById("hold2Slider").value = pattern.hold2;
+        updateAllSliders();
+      }
+
+      /* ============================================================
+   SLIDER UPDATES
+   ============================================================ */
+      function updateSlider(phase) {
+        if (sessionState !== "idle") return;
+
+        const val = parseInt(document.getElementById(phase + "Slider").value);
+        pattern[phase] = val;
+        document.getElementById(phase + "Val").textContent = val + "s";
+
+        // Deselect presets when manually adjusting
+        activePreset = null;
+        document
+          .querySelectorAll(".preset-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+
+        // Check if matches a preset
+        for (const [name, p] of Object.entries(presets)) {
+          if (
+            p.inhale === pattern.inhale &&
+            p.hold1 === pattern.hold1 &&
+            p.exhale === pattern.exhale &&
+            p.hold2 === pattern.hold2
+          ) {
+            activePreset = name;
+            document
+              .querySelector(`[data-preset="${name}"]`)
+              .classList.add("active");
+            break;
+          }
+        }
+      }
+
+      function updateAllSliders() {
+        ["inhale", "hold1", "exhale", "hold2"].forEach((phase) => {
+          document.getElementById(phase + "Val").textContent =
+            pattern[phase] + "s";
+        });
+      }
+
+      /* ============================================================
+   AUDIO CONTEXT
+   ============================================================ */
+      function ensureAudioContext() {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === "suspended") {
+          audioCtx.resume();
+        }
+        return audioCtx;
+      }
+
+      /* ============================================================
+   PHASE AUDIO CUES
+   
+   Each phase gets distinct audio feedback:
+   - Inhale: rising tone (sine wave sweeping up)
+   - Hold1: subtle pulsing tone
+   - Exhale: descending tone (sine wave sweeping down)
+   - Hold2: near silence with quiet tick
+   ============================================================ */
+      function stopPhaseCues() {
+        phaseCueNodes.forEach((node) => {
+          try {
+            if (node.stop) node.stop();
+            if (node.disconnect) node.disconnect();
+          } catch (e) {}
+        });
+        phaseCueNodes = [];
+      }
+
+      function playPhaseStartCue(phase) {
+        if (isMuted || !audioCtx) return;
+
+        stopPhaseCues();
+
+        const now = audioCtx.currentTime;
+        const dur = getPhaseDuration(phase);
+        if (dur <= 0) return;
+
+        const masterGain = audioCtx.createGain();
+        masterGain.gain.value = 0.12;
+        masterGain.connect(audioCtx.destination);
+        phaseCueNodes.push(masterGain);
+
+        switch (phase) {
+          case "inhale": {
+            // Rising sine tone
+            const osc = audioCtx.createOscillator();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(220, now);
+            osc.frequency.linearRampToValueAtTime(440, now + dur);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.3, now + 0.1);
+            gain.gain.setValueAtTime(0.3, now + dur - 0.15);
+            gain.gain.linearRampToValueAtTime(0, now + dur);
+
+            osc.connect(gain).connect(masterGain);
+            osc.start(now);
+            osc.stop(now + dur);
+            phaseCueNodes.push(osc, gain);
+            break;
+          }
+          case "hold1": {
+            // Subtle pulsing tone
+            const osc = audioCtx.createOscillator();
+            osc.type = "sine";
+            osc.frequency.value = 330;
+
+            const lfo = audioCtx.createOscillator();
+            lfo.type = "sine";
+            lfo.frequency.value = 2; // 2Hz pulse
+
+            const lfoGain = audioCtx.createGain();
+            lfoGain.gain.value = 0.1;
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.15, now);
+            gain.gain.setValueAtTime(0.15, now + dur - 0.1);
+            gain.gain.linearRampToValueAtTime(0, now + dur);
+
+            lfo.connect(lfoGain).connect(gain.gain);
+            osc.connect(gain).connect(masterGain);
+
+            lfo.start(now);
+            lfo.stop(now + dur);
+            osc.start(now);
+            osc.stop(now + dur);
+            phaseCueNodes.push(osc, lfo, lfoGain, gain);
+            break;
+          }
+          case "exhale": {
+            // Descending sine tone
+            const osc = audioCtx.createOscillator();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.linearRampToValueAtTime(180, now + dur);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.3, now + 0.1);
+            gain.gain.linearRampToValueAtTime(0.1, now + dur * 0.8);
+            gain.gain.linearRampToValueAtTime(0, now + dur);
+
+            osc.connect(gain).connect(masterGain);
+            osc.start(now);
+            osc.stop(now + dur);
+            phaseCueNodes.push(osc, gain);
+            break;
+          }
+          case "hold2": {
+            // Near silence with quiet ticks
+            const tickInterval = 1; // tick every second
+            const numTicks = Math.floor(dur / tickInterval);
+            for (let i = 0; i < numTicks; i++) {
+              const tickTime = now + i * tickInterval;
+              const osc = audioCtx.createOscillator();
+              osc.type = "sine";
+              osc.frequency.value = 600;
+
+              const gain = audioCtx.createGain();
+              gain.gain.setValueAtTime(0, tickTime);
+              gain.gain.linearRampToValueAtTime(0.06, tickTime + 0.01);
+              gain.gain.linearRampToValueAtTime(0, tickTime + 0.05);
+
+              osc.connect(gain).connect(masterGain);
+              osc.start(tickTime);
+              osc.stop(tickTime + 0.06);
+              phaseCueNodes.push(osc, gain);
+            }
+            break;
+          }
+        }
+      }
+
+      /* ============================================================
+   BACKGROUND AMBIENT SOUND GENERATOR
+   
+   Procedurally generated ambient loops using noise + filters:
+   - Rain: brown noise + bandpass filter
+   - Waves: filtered noise with LFO volume modulation  
+   - Forest: layered filtered noise + occasional chirp oscillators
+   - Drone: layered sine waves with slow detuning
+   ============================================================ */
+      function stopBgSound() {
+        if (bgSoundNodes) {
+          bgSoundNodes.forEach((node) => {
+            try {
+              if (node.stop) node.stop();
+              if (node.disconnect) node.disconnect();
+            } catch (e) {}
+          });
+          bgSoundNodes = null;
+        }
+      }
+
+      function createNoiseBuffer(duration) {
+        const ctx = ensureAudioContext();
+        const sampleRate = ctx.sampleRate;
+        const length = sampleRate * duration;
+        const buffer = ctx.createBuffer(1, length, sampleRate);
+        const data = buffer.getChannelData(0);
+
+        for (let i = 0; i < length; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+        return buffer;
+      }
+
+      function createBrownNoiseBuffer(duration) {
+        const ctx = ensureAudioContext();
+        const sampleRate = ctx.sampleRate;
+        const length = sampleRate * duration;
+        const buffer = ctx.createBuffer(1, length, sampleRate);
+        const data = buffer.getChannelData(0);
+
+        let lastOut = 0;
+        for (let i = 0; i < length; i++) {
+          const white = Math.random() * 2 - 1;
+          lastOut = (lastOut + 0.02 * white) / 1.02;
+          data[i] = lastOut * 3.5;
+        }
+        return buffer;
+      }
+
+      function startBgSound(type) {
+        stopBgSound();
+        if (type === "none" || !audioCtx) return;
+
+        const nodes = [];
+        const masterGain = audioCtx.createGain();
+        masterGain.gain.value = bgVolume;
+        masterGain.connect(audioCtx.destination);
+        nodes.push(masterGain);
+
+        // Store master gain reference for volume updates
+        masterGain._isBgMaster = true;
+
+        switch (type) {
+          case "rain": {
+            // Brown noise through bandpass for rain-like sound
+            const buffer = createBrownNoiseBuffer(4);
+            const source = audioCtx.createBufferSource();
+            source.buffer = buffer;
+            source.loop = true;
+
+            const bp1 = audioCtx.createBiquadFilter();
+            bp1.type = "bandpass";
+            bp1.frequency.value = 1200;
+            bp1.Q.value = 0.5;
+
+            const hp = audioCtx.createBiquadFilter();
+            hp.type = "highpass";
+            hp.frequency.value = 200;
+            hp.Q.value = 0.5;
+
+            // Add a second layer for more texture
+            const buffer2 = createNoiseBuffer(3);
+            const source2 = audioCtx.createBufferSource();
+            source2.buffer = buffer2;
+            source2.loop = true;
+
+            const bp2 = audioCtx.createBiquadFilter();
+            bp2.type = "bandpass";
+            bp2.frequency.value = 3500;
+            bp2.Q.value = 1.0;
+
+            const gain2 = audioCtx.createGain();
+            gain2.gain.value = 0.15;
+
+            source.connect(bp1).connect(hp).connect(masterGain);
+            source2.connect(bp2).connect(gain2).connect(masterGain);
+
+            source.start();
+            source2.start();
+            nodes.push(source, bp1, hp, source2, bp2, gain2);
+            break;
+          }
+          case "waves": {
+            // Filtered noise with LFO for wave-like surging
+            const buffer = createBrownNoiseBuffer(5);
+            const source = audioCtx.createBufferSource();
+            source.buffer = buffer;
+            source.loop = true;
+
+            const lp = audioCtx.createBiquadFilter();
+            lp.type = "lowpass";
+            lp.frequency.value = 400;
+            lp.Q.value = 1;
+
+            // LFO to modulate filter frequency (wave surges)
+            const lfo = audioCtx.createOscillator();
+            lfo.type = "sine";
+            lfo.frequency.value = 0.08; // Very slow wave
+
+            const lfoGain = audioCtx.createGain();
+            lfoGain.gain.value = 300;
+
+            lfo.connect(lfoGain).connect(lp.frequency);
+
+            // Volume LFO for wave crashing effect
+            const volLfo = audioCtx.createOscillator();
+            volLfo.type = "sine";
+            volLfo.frequency.value = 0.1;
+
+            const volLfoGain = audioCtx.createGain();
+            volLfoGain.gain.value = 0.3;
+
+            const mainGain = audioCtx.createGain();
+            mainGain.gain.value = 0.7;
+
+            volLfo.connect(volLfoGain).connect(mainGain.gain);
+
+            // White noise layer for foam
+            const foamBuffer = createNoiseBuffer(3);
+            const foamSource = audioCtx.createBufferSource();
+            foamSource.buffer = foamBuffer;
+            foamSource.loop = true;
+
+            const foamBp = audioCtx.createBiquadFilter();
+            foamBp.type = "highpass";
+            foamBp.frequency.value = 2000;
+
+            const foamGain = audioCtx.createGain();
+            foamGain.gain.value = 0.06;
+
+            // Another slow LFO for foam volume
+            const foamLfo = audioCtx.createOscillator();
+            foamLfo.type = "sine";
+            foamLfo.frequency.value = 0.12;
+
+            const foamLfoGain = audioCtx.createGain();
+            foamLfoGain.gain.value = 0.04;
+            foamLfo.connect(foamLfoGain).connect(foamGain.gain);
+
+            source.connect(lp).connect(mainGain).connect(masterGain);
+            foamSource.connect(foamBp).connect(foamGain).connect(masterGain);
+
+            source.start();
+            lfo.start();
+            volLfo.start();
+            foamSource.start();
+            foamLfo.start();
+            nodes.push(
+              source,
+              lp,
+              lfo,
+              lfoGain,
+              volLfo,
+              volLfoGain,
+              mainGain,
+              foamSource,
+              foamBp,
+              foamGain,
+              foamLfo,
+              foamLfoGain,
+            );
+            break;
+          }
+          case "forest": {
+            // Base: gentle wind (filtered noise)
+            const windBuffer = createBrownNoiseBuffer(4);
+            const windSource = audioCtx.createBufferSource();
+            windSource.buffer = windBuffer;
+            windSource.loop = true;
+
+            const windBp = audioCtx.createBiquadFilter();
+            windBp.type = "bandpass";
+            windBp.frequency.value = 600;
+            windBp.Q.value = 0.3;
+
+            const windGain = audioCtx.createGain();
+            windGain.gain.value = 0.4;
+
+            // Wind gusts LFO
+            const gustLfo = audioCtx.createOscillator();
+            gustLfo.type = "sine";
+            gustLfo.frequency.value = 0.15;
+            const gustGain = audioCtx.createGain();
+            gustGain.gain.value = 0.15;
+            gustLfo.connect(gustGain).connect(windGain.gain);
+
+            windSource.connect(windBp).connect(windGain).connect(masterGain);
+            windSource.start();
+            gustLfo.start();
+
+            // Rustling leaves (high freq noise)
+            const leafBuffer = createNoiseBuffer(3);
+            const leafSource = audioCtx.createBufferSource();
+            leafSource.buffer = leafBuffer;
+            leafSource.loop = true;
+
+            const leafBp = audioCtx.createBiquadFilter();
+            leafBp.type = "bandpass";
+            leafBp.frequency.value = 4000;
+            leafBp.Q.value = 2;
+
+            const leafGain = audioCtx.createGain();
+            leafGain.gain.value = 0.03;
+
+            const leafLfo = audioCtx.createOscillator();
+            leafLfo.type = "sine";
+            leafLfo.frequency.value = 0.3;
+            const leafLfoGain = audioCtx.createGain();
+            leafLfoGain.gain.value = 0.02;
+            leafLfo.connect(leafLfoGain).connect(leafGain.gain);
+
+            leafSource.connect(leafBp).connect(leafGain).connect(masterGain);
+            leafSource.start();
+            leafLfo.start();
+
+            // Bird chirps - periodic sine bursts
+            function scheduleBird() {
+              if (bgSoundType !== "forest" || !bgSoundNodes) return;
+
+              const now = audioCtx.currentTime;
+              const baseFreq = 2000 + Math.random() * 2000;
+              const chirpDur = 0.05 + Math.random() * 0.08;
+              const numChirps = 2 + Math.floor(Math.random() * 4);
+
+              for (let i = 0; i < numChirps; i++) {
+                const t = now + i * (chirpDur + 0.03 + Math.random() * 0.06);
+                const osc = audioCtx.createOscillator();
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(baseFreq, t);
+                osc.frequency.linearRampToValueAtTime(
+                  baseFreq * (1.1 + Math.random() * 0.3),
+                  t + chirpDur,
+                );
+
+                const g = audioCtx.createGain();
+                g.gain.setValueAtTime(0, t);
+                g.gain.linearRampToValueAtTime(0.04, t + 0.005);
+                g.gain.linearRampToValueAtTime(0, t + chirpDur);
+
+                osc.connect(g).connect(masterGain);
+                osc.start(t);
+                osc.stop(t + chirpDur + 0.01);
+              }
+
+              // Schedule next bird in 3-8 seconds
+              setTimeout(scheduleBird, 3000 + Math.random() * 5000);
+            }
+            setTimeout(scheduleBird, 1000 + Math.random() * 2000);
+
+            nodes.push(
+              windSource,
+              windBp,
+              windGain,
+              gustLfo,
+              gustGain,
+              leafSource,
+              leafBp,
+              leafGain,
+              leafLfo,
+              leafLfoGain,
+            );
+            break;
+          }
+          case "drone": {
+            // Layered sine waves with slow detuning for ambient drone
+            const freqs = [55, 82.5, 110, 165, 220];
+            const gains_arr = [0.25, 0.15, 0.2, 0.08, 0.05];
+
+            freqs.forEach((freq, i) => {
+              const osc = audioCtx.createOscillator();
+              osc.type = "sine";
+              osc.frequency.value = freq;
+
+              // Slow detune LFO
+              const lfo = audioCtx.createOscillator();
+              lfo.type = "sine";
+              lfo.frequency.value = 0.05 + i * 0.02;
+
+              const lfoGain = audioCtx.createGain();
+              lfoGain.gain.value = freq * 0.003;
+
+              lfo.connect(lfoGain).connect(osc.frequency);
+
+              const gain = audioCtx.createGain();
+              gain.gain.value = gains_arr[i];
+
+              osc.connect(gain).connect(masterGain);
+              osc.start();
+              lfo.start();
+              nodes.push(osc, lfo, lfoGain, gain);
+            });
+
+            // Add subtle noise layer
+            const noiseBuffer = createBrownNoiseBuffer(4);
+            const noiseSource = audioCtx.createBufferSource();
+            noiseSource.buffer = noiseBuffer;
+            noiseSource.loop = true;
+
+            const noiseLp = audioCtx.createBiquadFilter();
+            noiseLp.type = "lowpass";
+            noiseLp.frequency.value = 200;
+
+            const noiseGain = audioCtx.createGain();
+            noiseGain.gain.value = 0.08;
+
+            noiseSource.connect(noiseLp).connect(noiseGain).connect(masterGain);
+            noiseSource.start();
+            nodes.push(noiseSource, noiseLp, noiseGain);
+            break;
+          }
+        }
+
+        bgSoundNodes = nodes;
+      }
+
+      function changeBgSound() {
+        bgSoundType = document.getElementById("bgSoundSelect").value;
+        if (bgSoundType !== "none") {
+          ensureAudioContext();
+          startBgSound(bgSoundType);
+        } else {
+          stopBgSound();
+        }
+      }
+
+      function updateBgVolume() {
+        bgVolume = parseInt(document.getElementById("bgVolume").value) / 100;
+        if (bgSoundNodes) {
+          bgSoundNodes.forEach((node) => {
+            if (node._isBgMaster && node.gain) {
+              node.gain.value = bgVolume;
+            }
+          });
+        }
+      }
+
+      /* ============================================================
+   MUTE TOGGLE
+   ============================================================ */
+      document.getElementById("muteBtn").addEventListener("click", function () {
+        isMuted = !isMuted;
+        this.textContent = isMuted ? "🔇" : "🔊";
+
+        if (isMuted) {
+          stopPhaseCues();
+          if (bgSoundNodes) {
+            bgSoundNodes.forEach((node) => {
+              if (node._isBgMaster && node.gain) {
+                node.gain.value = 0;
+              }
+            });
+          }
+        } else {
+          if (bgSoundNodes) {
+            bgSoundNodes.forEach((node) => {
+              if (node._isBgMaster && node.gain) {
+                node.gain.value = bgVolume;
+              }
+            });
+          }
+        }
+      });
+
+      /* ============================================================
+   SESSION CONTROL
+   ============================================================ */
+      function getPhases() {
+        // Returns array of phases with non-zero durations
+        const phases = [];
+        if (pattern.inhale > 0) phases.push("inhale");
+        if (pattern.hold1 > 0) phases.push("hold1");
+        if (pattern.exhale > 0) phases.push("exhale");
+        if (pattern.hold2 > 0) phases.push("hold2");
+        return phases;
+      }
+
+      function getPhaseDuration(phase) {
+        return pattern[phase] || 0;
+      }
+
+      function getCycleTime() {
+        return pattern.inhale + pattern.hold1 + pattern.exhale + pattern.hold2;
+      }
+
+      function getNextPhase(current) {
+        const phases = getPhases();
+        if (phases.length === 0) return null;
+        const idx = phases.indexOf(current);
+        return phases[(idx + 1) % phases.length];
+      }
+
+      function getTotalLimitMs() {
+        const min = parseInt(document.getElementById("limitMin").value) || 0;
+        const sec = parseInt(document.getElementById("limitSec").value) || 0;
+        const total = min * 60 + sec;
+        return total > 0 ? total * 1000 : null;
+      }
+
+      function getBreathLimit() {
+        const val =
+          parseInt(document.getElementById("limitBreaths").value) || 0;
+        return val > 0 ? val : null;
+      }
+
+      function handleStart() {
+        if (sessionState === "idle") {
+          startSession();
+        } else if (sessionState === "running") {
+          pauseSession();
+        } else if (sessionState === "paused") {
+          resumeSession();
+        }
+      }
+
+      function startSession() {
+        // Validate pattern
+        const phases = getPhases();
+        if (phases.length === 0) return;
+
+        // Init audio context on user gesture
+        ensureAudioContext();
+
+        // Start background sound if selected
+        if (bgSoundType !== "none") {
+          startBgSound(bgSoundType);
+        }
+
+        sessionState = "running";
+        breathCount = 0;
+        sessionElapsedMs = 0;
+        pausedElapsedMs = 0;
+        sessionStartTime = performance.now();
+
+        // Start first phase
+        currentPhase = phases[0];
+        phaseDuration = getPhaseDuration(currentPhase) * 1000;
+        phaseStartTime = performance.now();
+
+        // Play phase cue
+        playPhaseStartCue(currentPhase);
+
+        // Update UI
+        lockSettings(true);
+        updateButtons();
+        updatePhaseLabel(currentPhase);
+
+        // Start animation loop
+        animFrameId = requestAnimationFrame(tick);
+      }
+
+      function pauseSession() {
+        sessionState = "paused";
+        pausedElapsedMs = sessionElapsedMs;
+        stopPhaseCues();
+
+        if (animFrameId) {
+          cancelAnimationFrame(animFrameId);
+          animFrameId = null;
+        }
+
+        updateButtons();
+      }
+
+      function resumeSession() {
+        sessionState = "running";
+        sessionStartTime = performance.now() - pausedElapsedMs;
+        phaseStartTime =
+          performance.now() - (phaseDuration - getRemainingPhaseMs());
+
+        // Replay cue for remaining phase time (simplified: just resume)
+        playPhaseStartCue(currentPhase);
+
+        updateButtons();
+        animFrameId = requestAnimationFrame(tick);
+      }
+
+      // Track remaining phase time for resume
+      let lastPhaseRemainingMs = 0;
+      function getRemainingPhaseMs() {
+        return lastPhaseRemainingMs;
+      }
+
+      function handleStop() {
+        endSession(true);
+      }
+
+      function endSession(manual = false) {
+        sessionState = "idle";
+
+        // Clean up
+        stopPhaseCues();
+        if (animFrameId) {
+          cancelAnimationFrame(animFrameId);
+          animFrameId = null;
+        }
+
+        // Show summary
+        showSummary();
+
+        // Reset circle
+        const circle = document.getElementById("breathCircle");
+        circle.style.transform = "scale(1)";
+        circle.className = "breathing-circle";
+
+        // Reset progress ring
+        document.getElementById("progressRing").style.strokeDashoffset = "660";
+
+        // Update UI
+        lockSettings(false);
+        updateButtons();
+
+        const t = translations[currentLang];
+        document.getElementById("phaseLabel").textContent = t.ready;
+        document.getElementById("phaseCountdown").textContent = "0.0";
+      }
+
+      function handleReset() {
+        if (sessionState !== "idle") {
+          sessionState = "idle";
+          stopPhaseCues();
+          stopBgSound();
+          if (animFrameId) {
+            cancelAnimationFrame(animFrameId);
+            animFrameId = null;
+          }
+        }
+
+        // Reset all state
+        breathCount = 0;
+        sessionElapsedMs = 0;
+
+        // Reset UI
+        const circle = document.getElementById("breathCircle");
+        circle.style.transform = "scale(1)";
+        circle.className = "breathing-circle";
+        document.getElementById("progressRing").style.strokeDashoffset = "660";
+
+        const t = translations[currentLang];
+        document.getElementById("phaseLabel").textContent = t.ready;
+        document.getElementById("phaseCountdown").textContent = "0.0";
+        document.getElementById("elapsedTime").textContent = "0:00";
+        document.getElementById("remainingTime").textContent = "--:--";
+        document.getElementById("sessionProgress").style.width = "0%";
+        document.getElementById("breathsDone").textContent = "0";
+
+        lockSettings(false);
+        updateButtons();
+      }
+
+      /* ============================================================
+   MAIN ANIMATION LOOP
+   ============================================================ */
+      function tick(timestamp) {
+        if (sessionState !== "running") return;
+
+        // Calculate elapsed
+        sessionElapsedMs = timestamp - sessionStartTime;
+        const phaseElapsedMs = timestamp - phaseStartTime;
+        const phaseRemainingMs = Math.max(0, phaseDuration - phaseElapsedMs);
+        lastPhaseRemainingMs = phaseRemainingMs;
+
+        // Check if phase is complete
+        if (phaseElapsedMs >= phaseDuration) {
+          // Move to next phase
+          const prevPhase = currentPhase;
+          currentPhase = getNextPhase(currentPhase);
+
+          // If we cycled back to first phase, increment breath count
+          const phases = getPhases();
+          if (phases.indexOf(currentPhase) <= phases.indexOf(prevPhase)) {
+            breathCount++;
+          }
+
+          // Check limits
+          const breathLimit = getBreathLimit();
+          const timeLimit = getTotalLimitMs();
+
+          if (
+            (breathLimit && breathCount >= breathLimit) ||
+            (timeLimit && sessionElapsedMs >= timeLimit)
+          ) {
+            endSession(false);
+            return;
+          }
+
+          // Start new phase
+          phaseDuration = getPhaseDuration(currentPhase) * 1000;
+          phaseStartTime = timestamp;
+
+          updatePhaseLabel(currentPhase);
+          playPhaseStartCue(currentPhase);
+        }
+
+        // Update visuals
+        updateCircle(currentPhase, phaseElapsedMs, phaseDuration);
+        updateCountdown(phaseRemainingMs);
+        updateTimers();
+        updateProgressBar();
+
+        animFrameId = requestAnimationFrame(tick);
+      }
+
+      /* ============================================================
+   VISUAL UPDATES
+   ============================================================ */
+      function updateCircle(phase, elapsed, duration) {
+        const circle = document.getElementById("breathCircle");
+        const progress = duration > 0 ? Math.min(elapsed / duration, 1) : 0;
+
+        // Remove old phase classes and add current
+        circle.className = "breathing-circle " + phase;
+
+        // Scale: inhale grows 1->1.7, exhale shrinks 1.7->1, holds stay static
+        let scale = 1;
+        switch (phase) {
+          case "inhale":
+            scale = 1 + progress * 0.7; // 1 -> 1.7
+            break;
+          case "hold1":
+            scale = 1.7; // Stay expanded
+            break;
+          case "exhale":
+            scale = 1.7 - progress * 0.7; // 1.7 -> 1
+            break;
+          case "hold2":
+            scale = 1; // Stay contracted
+            break;
+        }
+        circle.style.transform = `scale(${scale})`;
+
+        // Update progress ring
+        const ring = document.getElementById("progressRing");
+        const circumference = 2 * Math.PI * 105; // ~660
+        const offset = circumference * (1 - progress);
+        ring.style.strokeDashoffset = offset;
+
+        // Color the ring based on phase
+        const colors = {
+          inhale: "var(--inhale-color)",
+          hold1: "var(--hold-color)",
+          exhale: "var(--exhale-color)",
+          hold2: "var(--hold2-color)",
+        };
+        ring.style.stroke = colors[phase] || "var(--accent)";
+      }
+
+      function updatePhaseLabel(phase) {
+        const t = translations[currentLang];
+        const labels = {
+          inhale: t.phaseInhale,
+          hold1: t.phaseHold1,
+          exhale: t.phaseExhale,
+          hold2: t.phaseHold2,
+        };
+        const colors = {
+          inhale: "var(--inhale-color)",
+          hold1: "var(--hold-color)",
+          exhale: "var(--exhale-color)",
+          hold2: "var(--hold2-color)",
+        };
+
+        const label = document.getElementById("phaseLabel");
+        label.textContent = labels[phase] || "";
+        label.style.color = colors[phase] || "var(--text-primary)";
+      }
+
+      function updateCountdown(remainingMs) {
+        const seconds = Math.max(0, remainingMs / 1000);
+        document.getElementById("phaseCountdown").textContent =
+          seconds.toFixed(1);
+      }
+
+      function updateTimers() {
+        // Elapsed
+        const elapsedSec = Math.floor(sessionElapsedMs / 1000);
+        document.getElementById("elapsedTime").textContent =
+          formatTime(elapsedSec);
+
+        // Remaining
+        const timeLimit = getTotalLimitMs();
+        if (timeLimit) {
+          const remainingSec = Math.max(
+            0,
+            Math.floor((timeLimit - sessionElapsedMs) / 1000),
+          );
+          document.getElementById("remainingTime").textContent =
+            formatTime(remainingSec);
+        } else {
+          document.getElementById("remainingTime").textContent = "∞";
+        }
+
+        // Breath count
+        document.getElementById("breathsDone").textContent = breathCount;
+      }
+
+      function updateProgressBar() {
+        const timeLimit = getTotalLimitMs();
+        const breathLimit = getBreathLimit();
+        let progress = 0;
+
+        if (timeLimit && breathLimit) {
+          const timeProg = Math.min(sessionElapsedMs / timeLimit, 1);
+          const breathProg = Math.min(breathCount / breathLimit, 1);
+          progress = Math.max(timeProg, breathProg);
+        } else if (timeLimit) {
+          progress = Math.min(sessionElapsedMs / timeLimit, 1);
+        } else if (breathLimit) {
+          progress = Math.min(breathCount / breathLimit, 1);
+        }
+
+        document.getElementById("sessionProgress").style.width =
+          progress * 100 + "%";
+      }
+
+      function formatTime(totalSeconds) {
+        const min = Math.floor(totalSeconds / 60);
+        const sec = totalSeconds % 60;
+        return `${min}:${sec.toString().padStart(2, "0")}`;
+      }
+
+      /* ============================================================
+   UI STATE MANAGEMENT
+   ============================================================ */
+      function lockSettings(locked) {
+        document
+          .getElementById("app")
+          .classList.toggle("settings-locked", locked);
+      }
+
+      function updateButtons() {
+        const startBtn = document.getElementById("startBtn");
+        const stopBtn = document.getElementById("stopBtn");
+        const t = translations[currentLang];
+
+        switch (sessionState) {
+          case "idle":
+            startBtn.querySelector("[data-t]").textContent = t.start;
+            startBtn.className = "btn btn-primary";
+            stopBtn.classList.add("hidden");
+            break;
+          case "running":
+            startBtn.querySelector("[data-t]").textContent = t.pause;
+            startBtn.className = "btn btn-success";
+            stopBtn.classList.remove("hidden");
+            break;
+          case "paused":
+            startBtn.querySelector("[data-t]").textContent = t.resume;
+            startBtn.className = "btn btn-primary";
+            stopBtn.classList.remove("hidden");
+            break;
+        }
+      }
+
+      /* ============================================================
+   SESSION SUMMARY
+   ============================================================ */
+      function showSummary() {
+        if (breathCount === 0 && sessionElapsedMs < 2000) return; // Don't show for instant stops
+
+        const t = translations[currentLang];
+        const totalSec = Math.floor(sessionElapsedMs / 1000);
+
+        document.getElementById("sumDuration").textContent =
+          formatTime(totalSec);
+        document.getElementById("sumBreaths").textContent = breathCount;
+        document.getElementById("sumPattern").textContent =
+          `${pattern.inhale}-${pattern.hold1}-${pattern.exhale}-${pattern.hold2}`;
+        document.getElementById("sumCycleTime").textContent =
+          getCycleTime() + "s";
+
+        document.getElementById("summaryModal").classList.add("show");
+      }
+
+      function closeSummary() {
+        document.getElementById("summaryModal").classList.remove("show");
+      }
+
+      // Close modal on overlay click
+      document
+        .getElementById("summaryModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeSummary();
+        });
+
+      /* ============================================================
+   CLEANUP ON PAGE UNLOAD
+   ============================================================ */
+      window.addEventListener("beforeunload", () => {
+        stopPhaseCues();
+        stopBgSound();
+        if (audioCtx) {
+          audioCtx.close().catch(() => {});
+        }
+        if (animFrameId) {
+          cancelAnimationFrame(animFrameId);
+        }
+      });
+
+      /* ============================================================
+   INIT
+   ============================================================ */
+      init();
+    </script>
+  </body>
+</html>
